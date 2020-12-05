@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
@@ -12,3 +12,7 @@ def doctor_splash():
 
 @app.route('/write', methods=['POST'])
 def submit_journal_entry():
+    if request.method == 'POST':
+        if 'entry' in request.form:
+            entry = request.form['entry']
+            return {"entry":entry}
