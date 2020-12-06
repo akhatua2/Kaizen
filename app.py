@@ -3,9 +3,18 @@ import pyrebase
 import uuid
 import requests
 import datetime
-#from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
+import os
+# from optical import Transcriber
+import pytesseract
+from PIL import Image
 
 app = Flask(__name__)
+
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+UPLOAD_FOLD = 'uploads'
+UPLOAD_FOLDER = os.path.join(APP_ROOT, UPLOAD_FOLD)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 NLP_KEY = "AIzaSyBQAx6N94BhHUsDsquadh2zzUGNiBXdhGA"
 SENT_ANALYSIS_URL = "https://language.googleapis.com/v1/documents:analyzeSentiment"
@@ -81,15 +90,32 @@ def doctor_splash():
 
 @app.route('/write', methods=['POST'])
 def submit_journal_entry():
-    if request.method == 'POST':
-        if 'entry' in request.form:
+    if request.method == 'POST' and 'entry' in request.form:
             entry = request.form['entry']
             rating = score(entry)
-        
             data = {
                     "date": str(datetime.datetime.now()), 
                     "content": entry, 
                     "score": rating
                     }
             DB_REF.push(data)
+    return redirect((url_for('patient_splash')))
+
+
+@app.route('/upload', methods = ['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST' and 'file' in request.files:
+        f = request.files['file']
+        path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename))
+        f.save(path)
+        # pil_images = Transcriber.pdftopil(path)
+        # text = Transcriber.image_to_text(pil_images)
+        text = pytesseract.image_to_string(Image.open(path))
+        rating = score(text)
+        data = {
+                "date": str(datetime.datetime.now()), 
+                "content": text, 
+                "score": rating
+                }
+        DB_REF.push(data)    
     return redirect((url_for('patient_splash')))
