@@ -30,7 +30,44 @@
     </style>
     <!-- Custom styles for this template -->
     <link href="sticky-footer-navbar.css" rel="stylesheet">
+
+    <meta id="scores" scores="{{ scores }}">
+
+    <script>
+        window.onload = function () {
+        
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            theme: "light2",
+            // title:{
+            //     text: "Simple Line Chart"
+            // },
+            axisY: {
+                title: "Wellness Score",
+                stripLines: [{
+                    value: {{ score_avg }},
+                    label: "Average Wellness Score"
+                }]
+            },
+            data: [{        
+                // type: "line",
+                type: "splineArea",
+		        color: "rgba(54,158,173,.7)",
+                  indexLabelFontSize: 16,
+                  dataPoints: [
+                    {% for score in scores %}
+                    {y: {{score}}},
+                    {% endfor %}],
+            }]
+        });
+        chart.render();
+        
+        }
+        </script>
+
   </head>
+
+
   <body class="d-flex flex-column h-100">
   <header style="margin-bottom: 3em;">
   <!-- Fixed navbar -->
@@ -48,13 +85,16 @@
 <!-- Begin page content -->
 <main role="main" class="flex-shrink-0">
   <div class="container">
-    <h1 class="mt-5">Patient Journal Scores</h1>
+    <h1 class="mt-5">Shinji Ikari's Progress</h1>
     <p class="lead">Keep track of your patient's progress down below.</p>
+    <div>
+        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    </div>
 
     <div style="margin-top: 2em;">
         {% if entries %}
             {% for entry in entries %}
-              <div class="card" style="width: 50rem;">
+              <div class="card" style="width: 100%;">
                 <div class="card-body">
                   {% if entry.score < 3.5 %}
                     <h5 style="color:crimson;"><span style="font-size: 1.5em;"><b>{{ entry.score }}</b></span> Concern</h5>
@@ -81,4 +121,5 @@
     <span class="text-muted">Stuff.</span>
   </div>
 </footer>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </html>

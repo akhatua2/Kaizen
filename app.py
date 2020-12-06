@@ -57,8 +57,10 @@ def doctor_splash():
     entries = DB_REF.get().val()
     if entries is not None:
         entries = [entry_tuple[1] for entry_tuple in entries.items()][::-1]
+        scores =  [entry["score"] for entry in entries]
+        score_avg = sum(scores)/float(len(scores))
     # more sauce
-    return render_template("doctor.html", entries=entries)
+    return render_template("doctor.html", entries=entries, scores=scores, score_avg=score_avg)
 
 @app.route('/write', methods=['POST'])
 def submit_journal_entry():
