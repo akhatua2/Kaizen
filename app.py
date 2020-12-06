@@ -54,7 +54,7 @@ def patient_splash():
     # print(JOURNAL_ENTRIES_REF.child("blah").get().val()["content"])
     return render_template("patient.html")
 
-@app.route('/myjournal')
+@app.route('/journal')
 def my_journal():
     entries = DB_REF.get().val()
     if entries is not None:
@@ -62,11 +62,11 @@ def my_journal():
     # more sauce
     return render_template("journal.html", entries=entries)
 
-@app.route('/doctors/patients')
+@app.route('/patients')
 def patients():
     return render_template("patients.html")
 
-@app.route('/doctors')
+@app.route('/patients/1')
 def doctor_splash(): 
     entries = DB_REF.get().val()
     if entries is not None:
