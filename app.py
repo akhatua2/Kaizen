@@ -1,18 +1,75 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for
+import pyrebase
+import uuid
+import requests
+import datetime
 
 app = Flask(__name__)
 
+NLP_KEY = "AIzaSyBQAx6N94BhHUsDsquadh2zzUGNiBXdhGA"
+SENT_ANALYSIS_URL = "https://language.googleapis.com/v1/documents:analyzeSentiment"
+
+config = {
+  "apiKey": "AIzaSyBG0wTnjzB9vbK1TvJiPPzpZ4vqevlOVDs",
+  "authDomain": "hackduke-dd652.firebaseapp.com",
+  "databaseURL": "https://hackduke-dd652-default-rtdb.firebaseio.com/",
+  "storageBucket": "hackduke-dd652.appspot.com"
+}
+
+firebase = pyrebase.initialize_app(config)
+DB_REF = firebase.database()
+
+
+
+def score(sentence):
+    url = SENT_ANALYSIS_URL
+    data = {"document": {"content": sentence, "type": "PLAIN_TEXT"}}
+    params = {"key": NLP_KEY}
+    r = requests.post(url, params=params, json=data)
+    magnitude = r.json()['documentSentiment']['magnitude']
+    score = r.json()['documentSentiment']['score']
+    if score >= 0:
+        score = (score * 5 + 5) + magnitude
+    else:
+        score = (score * 5 + 5) - magnitude
+    if score > 10:
+        score = 10
+    elif score < 0:
+        score = 0
+    return round(score,5)
+    # return score
+
 @app.route('/')
 def patient_splash():
+    # print(JOURNAL_ENTRIES_REF.child("blah").get().val()["content"])
     return render_template("patient.html")
 
+@app.route('/myjournal')
+def my_journal():
+    entries = DB_REF.get().val()
+    if entries is not None:
+        entries = [entry_tuple[1] for entry_tuple in entries.items()][::-1]
+    # more sauce
+    return render_template("journal.html", entries=entries)
+
 @app.route('/doctors')
-def doctor_splash():
-    return render_template("doctor.html")
+def doctor_splash(): 
+    entries = DB_REF.get().val()
+    if entries is not None:
+        entries = [entry_tuple[1] for entry_tuple in entries.items()][::-1]
+    # more sauce
+    return render_template("doctor.html", entries=entries)
 
 @app.route('/write', methods=['POST'])
 def submit_journal_entry():
     if request.method == 'POST':
         if 'entry' in request.form:
             entry = request.form['entry']
-            return {"entry":entry}
+            rating = score(entry)
+            data = {
+                "date": str(datetime.datetime.now()), 
+                "content": entry, 
+                "score": rating
+                }
+            DB_REF.push(data)
+    return redirect((url_for('patient_splash')))

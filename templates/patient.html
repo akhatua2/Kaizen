@@ -27,16 +27,28 @@
           font-size: 3.5rem;
         }
       }
+
+      .shadow {
+          box-shadow: 0 6px 16px -6px black;
+          height: 30em;
+          width: 100%;
+          margin-bottom: 1em;
+          /* position: absolute; */
+          /* top: 225px; */
+          /* z-index: -1;
+          left: 50px; */
+          padding: 1em;
+      }
     </style>
     <!-- Custom styles for this template -->
     <link href="sticky-footer-navbar.css" rel="stylesheet">
   </head>
   <body class="d-flex flex-column h-100">
-  <header style="margin-bottom: 3em;">
+  <header style="margin-bottom: 3.5em;">
   <!-- Fixed navbar -->
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <nav style="background-color: #E09F7D;" class="navbar navbar-expand-md navbar-dark fixed-top">
     <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav mr-auto">
+      <ul style="font-size: 1.5em;" class="navbar-nav mr-auto">
         <li class="nav-item active">
           <a class="nav-link" href="/">Today <span class="sr-only">(current)</span></a>
         </li>
@@ -51,17 +63,21 @@
 <!-- Begin page content -->
 <main role="main" class="flex-shrink-0">
   <div class="container">
-    <h1 class="mt-5">Hi William,</h1>
+    <h1 class="mt-5">Good evening, William.</h1>
     <p class="lead">Welcome to <b>dack</b>, a therapeutic journal made for you. Your healthcare provider will not see your journal entries but will be able to 
       keep track of your progress through a wellness score, enabling better care options moving forward.
     </p>
-    
+
+
+
+
     <form action="/write" method="post">
-      <div class="form-group">
-        <h3><label for="exampleFormControlTextarea1">Feel free to write here.</label></h3>
-        <textarea class="form-control" id="entry" name="entry" rows="3" required></textarea>
+      <div class="shadow">
+        <div class="form-group">
+          <textarea style="font-size: 2em; border: none" placeholder="Start writing..." class="form-control" id="entry" name="entry" rows="9" required></textarea>
+        </div>
       </div>
-      <button class="btn btn-primary btn-lg btn-block" type="submit">Write</button>
+      <button style="background-color:#45b3e0; border-color: #45b3e0;" class="btn btn-primary btn-lg btn-block" type="submit">Write</button>
     </form>
 
 
