@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <title>Dack</title>
+    <title>Kaizen Journal</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sticky-footer-navbar/">
 
@@ -32,11 +32,11 @@
     <link href="sticky-footer-navbar.css" rel="stylesheet">
 
     <meta id="scores" scores="{{ scores }}">
+    <meta id="score_type_dist" score_type_dist="{{ score_type_dist }}">
 
     <script>
         window.onload = function () {
-        
-        var chart = new CanvasJS.Chart("chartContainer", {
+        var chart = new CanvasJS.Chart("timeSeries", {
             animationEnabled: true,
             theme: "light2",
             // title:{
@@ -60,11 +60,35 @@
                     {% endfor %}],
             }]
         });
-        chart.render();
-        
-        }
-        </script>
 
+        CanvasJS.addColorSet("ourColors",
+                [//colorSet Array
+                "crimson",
+                "rgb(225, 178, 22)",
+                "rgb(40, 176, 49)",             
+                ]);
+
+        var donut = new CanvasJS.Chart("donutChart", {
+            animationEnabled: true,
+            colorSet: "ourColors",
+            data: [{
+                type: "doughnut",
+                startAngle: 60,
+                //innerRadius: 60,
+                indexLabelFontSize: 17,
+                
+                dataPoints: [
+                            {% for score_type in score_type_dist %}    
+                            { y: {{ score_type.count }} },
+                            {% endfor %}],
+                }]
+        });
+            
+        chart.render();
+        donut.render();
+      }
+
+    </script>
   </head>
 
 
@@ -74,9 +98,9 @@
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/doctors">Patient Progress<span class="sr-only">(current)</span></a>
-        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/doctors/patients">Patients</a>
+          </li>
       </ul>
     </div>
   </nav>
@@ -87,12 +111,23 @@
   <div class="container">
     <h1 class="mt-5">Shinji Ikari's Progress</h1>
     <p class="lead">Keep track of your patient's progress down below.</p>
+
+    {% if entries %}
     <div>
-        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+        <div id="timeSeries" style="height: 370px; width: 60%; display: inline-block; margin-right: 1em;"></div>
+        <div id="donutChart" style="height: 370px; width: 35%; display: inline-block;"></div>
+    </div>
+
+    <div>
+        <div style="width: 60%; display: inline-block; margin-right: 2em;">
+            <p style="font-size: 1.5em;"><b>Patient wellness score over time.</b></p>
+        </div>
+        <div style="width: 35%; display: inline-block;">
+            <p><b>Distribution of journal entry scores. <br/> (Red: Concern, Yellow: Moderate, Green: Good)</b></p>
+        </div>
     </div>
 
     <div style="margin-top: 2em;">
-        {% if entries %}
             {% for entry in entries %}
               <div class="card" style="width: 100%;">
                 <div class="card-body">

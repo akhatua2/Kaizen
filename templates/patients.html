@@ -32,17 +32,14 @@
     <link href="sticky-footer-navbar.css" rel="stylesheet">
   </head>
   <body class="d-flex flex-column h-100">
-    <header style="margin-bottom: 3.5em;">
+    <header style="margin-bottom: 3em;">
         <!-- Fixed navbar -->
-        <nav style="background-color: #E09F7D;" class="navbar navbar-expand-md navbar-dark fixed-top">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul style="font-size: 1.5em;" class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="/">Today</a>
-              </li>
+            <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="/myjournal">My Journal <span class="sr-only">(current)</span></a>
-              </li>
+                  <a class="nav-link" href="/doctors/patients">Patients<span class="sr-only">(current)</span></a>
+                </li>
             </ul>
           </div>
         </nav>
@@ -51,23 +48,44 @@
 <!-- Begin page content -->
 <main role="main" class="flex-shrink-0">
   <div class="container">
-    <h1 class="mt-5">Your Journal</h1>
-    <p class="lead">Keep track of all your journal entries down below.</p>
+    <h1 class="mt-5">Your Patients</h1>
+    <p class="lead">Keep track of all your patients' progress.</p>
 
     <div style="margin-top: 2em;">
-        {% if entries %}
-            {% for entry in entries %}
               <div class="card" style="width: 100%;">
+                
                 <div class="card-body">
-                  <h6 class="card-subtitle mb-2 text-muted">{{ entry.date }}</h6>
-                  <p class="card-text">{{ entry.content }}</p>
+                <a style="text-decoration: none;" href="/doctors">
+                  <h5 style="color: black;" class="card-title">Shinji Ikari</h5>
+                </a>
+                  <h6 class="card-subtitle mb-2 text-muted">#230948A</h6>
+                  <p class="card-text">Anxiety, Depression</p>
                 </div>
               </div>
-            {% endfor %}
-        {% else %}
-            <h3>No journal entries yet. Happy writing!</h3>
-        {% endif %}
 
+              <div class="card" style="width: 100%;">
+                <div class="card-body">
+                  <h5 class="card-title">Louis Litt</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">#638573D</h6>
+                  <p class="card-text">Anger Issues, Social Anxiety</p>
+                </div>
+              </div>
+              
+              <div class="card" style="width: 100%;">
+                <div class="card-body">
+                  <h5 class="card-title">Light Yagami</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">#783574H</h6>
+                  <p class="card-text">Sadistic, Personality Disorder</p>
+                </div>
+              </div>
+
+              <div class="card" style="width: 100%;">
+                <div class="card-body">
+                  <h5 class="card-title">Indiana Jones</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">#986284L</h6>
+                  <p class="card-text">Diabetes, PTSD</p>
+                </div>
+              </div>
     </div>
     
   </div>

@@ -3,6 +3,7 @@ import pyrebase
 import uuid
 import requests
 import datetime
+#from werkzeug import secure_filename
 
 app = Flask(__name__)
 
@@ -52,6 +53,10 @@ def my_journal():
     # more sauce
     return render_template("journal.html", entries=entries)
 
+@app.route('/doctors/patients')
+def patients():
+    return render_template("patients.html")
+
 @app.route('/doctors')
 def doctor_splash(): 
     entries = DB_REF.get().val()
@@ -59,8 +64,19 @@ def doctor_splash():
         entries = [entry_tuple[1] for entry_tuple in entries.items()][::-1]
         scores =  [entry["score"] for entry in entries]
         score_avg = sum(scores)/float(len(scores))
-    # more sauce
-    return render_template("doctor.html", entries=entries, scores=scores, score_avg=score_avg)
+        score_type_dist = [{"type":"Concern","count":0}, {"type":"Moderate","count":0}, {"type":"Good","count":0}]
+        for score in scores:
+            if score < 3.5:
+                score_type_dist[0]["count"] += 1
+            elif score < 6.5:
+                score_type_dist[1]["count"] += 1
+            else:
+                score_type_dist[2]["count"] += 1
+        return render_template("doctor.html", entries=entries, 
+                            scores=scores, score_avg=score_avg, 
+                            score_type_dist=score_type_dist)
+    
+    return render_template("doctor.html")
 
 @app.route('/write', methods=['POST'])
 def submit_journal_entry():
@@ -68,10 +84,11 @@ def submit_journal_entry():
         if 'entry' in request.form:
             entry = request.form['entry']
             rating = score(entry)
+        
             data = {
-                "date": str(datetime.datetime.now()), 
-                "content": entry, 
-                "score": rating
-                }
+                    "date": str(dateme.datetime.now()), 
+                    "content": entry, 
+                    "score": rating
+                    }
             DB_REF.push(data)
     return redirect((url_for('patient_splash')))
