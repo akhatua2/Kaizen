@@ -69,7 +69,7 @@ def doctor_splash():
         for score in scores:
             if score < 3.5:
                 score_type_dist[0]["count"] += 1
-            elif score < 6.5:
+            elif score < 8:
                 score_type_dist[1]["count"] += 1
             else:
                 score_type_dist[2]["count"] += 1
