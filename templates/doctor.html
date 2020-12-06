@@ -31,7 +31,7 @@
     <!-- Custom styles for this template -->
     <link href="sticky-footer-navbar.css" rel="stylesheet">
 
-    <meta id="scores" scores="{{ scores }}">
+    <meta id="scores_rev" scores_rev="{{ scores_rev }}">
     <meta id="score_type_dist" score_type_dist="{{ score_type_dist }}">
 
     <script>
@@ -55,7 +55,7 @@
 		        color: "rgba(54,158,173,.7)",
                   indexLabelFontSize: 16,
                   dataPoints: [
-                    {% for score in scores %}
+                    {% for score in scores_rev %}
                     {y: {{score}}},
                     {% endfor %}],
             }]
@@ -153,7 +153,7 @@
 
 <footer class="footer mt-auto py-3">
   <div class="container">
-    <span class="text-muted">Stuff.</span>
+    <span class="text-muted">Kaizen</span>
   </div>
 </footer>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
