@@ -1,6 +1,4 @@
-![Poster](poster.png?raw=true "Poster")
-
-![Poster](portalkaizen.png?raw=true "Poster")
+![Poster](poster.png?raw=true "Poster") ![Poster](portalkaizen.png?raw=true "Poster")
 
 # About Kaizen
 
