@@ -1,6 +1,6 @@
 <p float="left">
-  <img src="/poster.png" width="50%" />
-  <img src="/portalkaizen.png" width="50%" /> 
+  <img src="/poster.png" width="45%" />
+  <img src="/portalkaizen.png" width="45%" /> 
 </p>
 
 # About Kaizen
