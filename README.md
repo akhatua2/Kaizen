@@ -1,4 +1,4 @@
-<p float="left" align="middle">
+<p align="middle">
   <img src="/poster.png" width="45%" />
   <img src="/portalkaizen.png" width="45%" /> 
 </p>
