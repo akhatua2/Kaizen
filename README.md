@@ -1,8 +1,6 @@
-![Poster](poster.png?raw=true "Poster") ![Poster](portalkaizen.png?raw=true "Poster")
-
 <p float="left">
-  <img src="/poster.png" width="50" />
-  <img src="/portalkaizen.png" width="50" /> 
+  <img src="/poster.png" width="50%" />
+  <img src="/portalkaizen.png" width="50%" /> 
 </p>
 
 # About Kaizen
