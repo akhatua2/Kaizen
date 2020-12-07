@@ -7,7 +7,7 @@ Kaizen - the Japanese term meaning "change for the better" or "continuous” imp
 # How to Locally Run Kaizen
 1. `export FLASK_APP=app.py`
 2. `flask run`
-3. Check out 127.0.0.1:5000 on any browser!
+3. `Check out 127.0.0.1:5000 on any browser!`
 
 ## Python dependencies 
 Use `pip install <NAME_OF_LIBRARY>` to install these libraries on your machine or Python virtual environment:
