@@ -16,11 +16,11 @@ UPLOAD_FOLD = 'uploads'
 UPLOAD_FOLDER = os.path.join(APP_ROOT, UPLOAD_FOLD)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-NLP_KEY = "AIzaSyBQAx6N94BhHUsDsquadh2zzUGNiBXdhGA"
+NLP_KEY = "your-key"
 SENT_ANALYSIS_URL = "https://language.googleapis.com/v1/documents:analyzeSentiment"
 
 config = {
-  "apiKey": "AIzaSyBG0wTnjzB9vbK1TvJiPPzpZ4vqevlOVDs",
+  "apiKey": "your-key",
   "authDomain": "hackduke-dd652.firebaseapp.com",
   "databaseURL": "https://hackduke-dd652-default-rtdb.firebaseio.com/",
   "storageBucket": "hackduke-dd652.appspot.com"
